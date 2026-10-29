@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday Kickoff - Vendor Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Pacifico&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Festive background styling */
+            background-color: #7a0b0b;
+            background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+            font-family: 'Montserrat', sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Header / Event Details */
+        .event-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .event-header h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.8rem;
+            color: #ffd700; /* Gold */
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .event-header h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+            background: #a31d1d;
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 8px;
+            border: 2px solid #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .event-details {
+            font-size: 1rem;
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 5px;
+        }
+
+        .event-details i { color: #ffd700; margin-right: 6px; }
+
+        /* Main Form Card */
+        .application-card {
+            background: #fdfbf7; /* Warm white */
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-top: 10px solid #0b6623; /* Christmas Green */
+            padding: 2.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative snowflakes in background */
+        .application-card::before {
+            content: "❅";
+            position: absolute;
+            top: 10px; left: 15px;
+            font-size: 4rem;
+            color: #e8f0e8;
+            z-index: 0;
+        }
+        .application-card::after {
+            content: "❅";
+            position: absolute;
+            bottom: 10px; right: 15px;
+            font-size: 5rem;
+            color: #e8f0e8;
+            z-index: 0;
+        }
+
+        .form-content { position: relative; z-index: 1; }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .form-section h3 {
+            font-size: 1.2rem;
+            color: #0b6623;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .form-section h3 i { color: #a31d1d; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .form-row.full { grid-template-columns: 1fr; }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .input-group label span { color: #a31d1d; } /* Required asterisk */
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+            background: #fafafa;
+            transition: all 0.2s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: #0b6623;
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(11, 102, 35, 0.1);
+        }
+
+        .input-group textarea { resize: vertical; min-height: 80px; }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #444;
+            line-height: 1.4;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: #a31d1d;
+            cursor: pointer;
+        }
+
+        /* Submit Button */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #a31d1d 0%, #7a0b0b 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px -5px rgba(163, 29, 29, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(163, 29, 29, 0.6);
+            background: linear-gradient(135deg, #b52222 0%, #8a0d0d 100%);
+        }
+
+        .btn-submit i { font-size: 1.2rem; }
+
+        /* Toast */
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #0b6623;
+            color: white;
+            font-weight: 600;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .toast-message.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; gap: 1rem; }
+            .event-header h1 { font-size: 2.2rem; }
+            .application-card { padding: 1.5rem 1rem; }
+            .btn-submit { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Event Header -->
+        <div class="event-header">
+            <h1>Holiday Kickoff</h1>
+            <h2>Food & Vendor Festival</h2>
+            <div class="event-details">
+                <i class="fas fa-map-marker-alt"></i> Water Works Park, Tampa, FL &nbsp;|&nbsp; 
+                <i class="fas fa-calendar-alt"></i> Nov 28 & 29, 2026
+            </div>
+        </div>
+
+        <!-- Main Application Card -->
+        <div class="application-card">
+            <div class="form-content">
+                <form id="vendorForm">
+                    
+                    <!-- Contact Info -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-user-circle"></i> Vendor / Contact Information</h3>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>First Name <span>*</span></label>
+                                <input type="text" required placeholder="John">
+                            </div>
+                            <div class="input-group">
+                                <label>Last Name <span>*</span></label>
+                                <input type="text" required placeholder="Doe">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Age <span>*</span></label>
+                                <input type="number" required placeholder="e.g. 35">
+                            </div>
+                            <div class="input-group">
+                                <label>Phone Number <span>*</span></label>
+                                <input type="tel" required placeholder="(000) 000-0000">
+                            </div>
+                        </div>
+                        <div class="form-row full">
+                            <div class="input-group">
+                                <label>Business Name <span>*</span></label>
+                                <input type="text" required placeholder="Your Business Name">
+                            </div>
+                        </div>
+                        <div class="form-row full">
+                            <div class="input-group">
+                                <label>Home Address <span>*</span></label>
+                                <input type="text" required placeholder="Street, City, State, Zip">
+                            </div>
+                        </div>
+                        <div class="form-row full">
+                            <div class="input-group">
+                                <label>Approx. how many events/markets per year? <span>*</span></label>
+                                <input type="text" required placeholder="e.g. 5-10 events">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business Details -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-store"></i> Business & Product Details</h3>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Type of Business / Category <span>*</span></label>
+                                <select required>
+                                    <option value="">Please Select</option>
+                                    <option>Food Trucks & Food Vendors</option>
+                                    <option>Desserts & Specialty Foods</option>
+                                    <option>Arts, Crafts & Handmade Gifts</option>
+                                    <option>Jewelry, Boutiques & Fashion</option>
+                                    <option>Home Décor</option>
+                                    <option>Local Businesses</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Approx. product price range <span>*</span></label>
+                                <input type="text" required placeholder="e.g. $5 - $50">
+                            </div>
+                        </div>
+                        <div class="form-row full">
+                            <div class="input-group">
+                                <label>How long have you been in business? <span>*</span></label>
+                                <select required>
+                                    <option value="">Please Select</option>
+                                    <option>Less than 1 year</option>
+                                    <option>1–3 years</option>
+                                    <option>4–6 years</option>
+                                    <option>7 years or more</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row full">
+                            <div class="input-group">
+                                <label>Describe your products/services <span>*</span></label>
+                                <textarea required placeholder="What are you planning to sell at the event?"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row full">
+                            <div class="input-group">
+                                <label>Approved Products (Please bring only these) <span>*</span></label>
+                                <textarea required placeholder="List your approved products here..."></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Upload Product Photos</label>
+                                <input type="file" multiple accept="image/*">
+                            </div>
+                            <div class="input-group">
+                                <label>Social Media Link (Optional)</label>
+                                <input type="url" placeholder="https://instagram.com/yourbusiness">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Booth & Participation -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-tent"></i> Booth & Participation Details</h3>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Booth Type <span>*</span></label>
+                                <select required>
+                                    <option value="">Please Select</option>
+                                    <option>Standard Booth</option>
+                                    <option>Double Booth</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Booth Size & Pricing <span>*</span></label>
+                                <select required>
+                                    <option value="">Please Select</option>
+                                    <option>10×10ft - One Day: $85</option>
+                                    <option>10×10ft - Both Days: $165</option>
+                                    <option>10×15ft - One Day: $100</option>
+                                    <option>10×15ft - Both Days: $195</option>
+                                    <option>Food Trucks - One Day: $160</option>
+                                    <option>Food Trucks - Both Days: $305</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="amenities" required>
+                            <label for="amenities">I understand my booth includes: One 6-foot table, Two chairs, Access to water. <span>*</span></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="reservation" required>
+                            <label for="reservation">I understand booths are held for 48 hours pending payment/update. <span>*</span></label>
+                        </div>
+
+                        <div class="form-row" style="margin-top: 1.5rem;">
+                            <div class="input-group">
+                                <label>Require Electricity?</label>
+                                <select>
+                                    <option>No</option>
+                                    <option>Yes</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Require Tent/Canopy?</label>
+                                <select>
+                                    <option>No</option>
+                                    <option>Yes, I need one</option>
+                                    <option>I will bring my own</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Require Air Conditioning (AC)?</label>
+                                <select>
+                                    <option>No</option>
+                                    <option>Yes</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Other Special Requirements?</label>
+                                <input type="text" placeholder="Please describe...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Info -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-credit-card"></i> Payment Information</h3>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Payment Status <span>*</span></label>
+                                <select required>
+                                    <option value="">Please Select</option>
+                                    <option>Full payment</option>
+                                    <option>Partial payment or deposit</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Preferred Payment Method <span>*</span></label>
+                                <select required>
+                                    <option value="">Please Select</option>
+                                    <option>Apple Pay</option>
+                                    <option>Cashapp</option>
+                                    <option>Chime</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="paymentAck" required>
+                            <label for="paymentAck">I understand my booth is officially confirmed once payment is received and verified. <span>*</span></label>
+                        </div>
+                    </div>
+
+                    <!-- Policies & Agreement -->
+                    <div class="form-section" style="background: #fffaf0; border-color: #ffd700;">
+                        <h3><i class="fas fa-file-signature"></i> Event Policies & Agreement</h3>
+                        <p style="font-size: 0.85rem; color: #555; margin-bottom: 15px; line-height: 1.5;">
+                            <strong>Please review:</strong> Non-Refundable Fees. Vendors are responsible for setup/staffing/compliance. Event organizers are not liable for loss/theft/damage. Acceptance is subject to event approval and space availability.
+                        </p>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" required>
+                            <label for="terms">I have read and agree to the event terms and policies <span>*</span></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="comms" required>
+                            <label for="comms">I acknowledge that all official communications will be handled via email. <span>*</span></label>
+                        </div>
+                        
+                        <div class="form-row" style="margin-top: 1.5rem;">
+                            <div class="input-group">
+                                <label>Type Full Name to Acknowledge <span>*</span></label>
+                                <input type="text" required placeholder="Your Full Name">
+                            </div>
+                            <div class="input-group">
+                                <label>Email Address <span>*</span></label>
+                                <input type="email" required placeholder="example@example.com">
+                            </div>
+                        </div>
+                        <div class="form-row full">
+                             <div class="input-group">
+                                <label>Date of Acknowledgement <span>*</span></label>
+                                <input type="date" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="action-buttons">
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-gift"></i> Submit Vendor Application
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-message" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span>Application Submitted! Check your email for next steps.</span>
+    </div>
+
+    <script>
+        const form = document.getElementById('vendorForm');
+        const toast = document.getElementById('toast');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent page reload
+            
+            // Show success toast
+            toast.classList.add('show');
+            
+            // Hide toast after 4 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+
+            // Optional: Reset form after successful submission
+            // form.reset(); 
+        });
+    </script>
+</body>
+</html>
